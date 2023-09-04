@@ -69,10 +69,10 @@ public class HotelManagementController {
 
         //We are having a new facilites that a hotel is planning to bring.
         //If the hotel is already having that facility ignore that facility otherwise add that facility in the hotelDb
-        Hotel hotel =
+
         //return the final updated List of facilities and also update that in your hotelDb
         //Note that newFacilities can also have duplicate facilities possible
-        return null;
+        return hotelManagementService.updateFacilities(newFacilities,hotelName);
     }
 
 }

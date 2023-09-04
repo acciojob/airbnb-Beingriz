@@ -51,4 +51,9 @@ public class HotelManagementService {
     public int getbookings(Integer aadharnumber){
        return hotelManagementRepository.getBookings(aadharnumber);
     }
-}
+
+    public Hotel updateFacilities(List<Facility> newFacilities,String hotelName){
+        return hotelManagementRepository.updateFacilities(newFacilities,hotelName);
+    }
+
+    }
