@@ -31,10 +31,9 @@ public class HotelManagementService {
         String smaller = hotelnames.get(0);
         if(hotelnames.size() == 1){
             return smaller;
-        }else if(hotelnames.size()>1){
-
+        }else {
            for(String name :  hotelnames){
-                if(name.compareTo(smaller) < 0)
+                if(name.compareTo(smaller) > 0)
                    smaller  = name;
            }
        }

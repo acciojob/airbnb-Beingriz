@@ -46,7 +46,7 @@ public class HotelManagementRepository {
         int max = Integer.MIN_VALUE;
         for (Map.Entry<String, Hotel> hotel: hotelDb.entrySet()){
             // if hotel with no facilities
-            if(hotel.getValue().getFacilities().isEmpty() || hotel.getValue().getFacilities() ==  null ) return hotelnames;
+            if(hotel.getValue().getFacilities().isEmpty()) return hotelnames;
 
             if(hotel.getValue().getFacilities().size() > max || hotel.getValue().getFacilities().size() == max){
                 max = hotel.getValue().getFacilities().size();
