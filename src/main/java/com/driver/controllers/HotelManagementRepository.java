@@ -23,7 +23,11 @@ public class HotelManagementRepository {
     // Adding new Hotel
     public String addHotel(Hotel hotel){
         // if hotel name is null return failure
-        if(hotel.getHotelName() ==  null) return "FAILURE";
+        //You need to add an hotel to the database
+        //incase the hotelName is null or the hotel Object is null return an empty a FAILURE
+        //Incase somebody is trying to add the duplicate hotelName return FAILURE
+        //in all other cases return SUCCESS after successfully adding the hotel to the hotelDb.
+        if(hotel.getHotelName() ==  null || hotel == null) return "FAILURE";
         if (hotel.getHotelName().equals(hotelDb.get(hotel.getHotelName()))) return "FAILURE";
         hotelDb.put(hotel.getHotelName(),  hotel);
         return "SUCCESS";
@@ -78,4 +82,24 @@ public class HotelManagementRepository {
         return userbookingsDb.get(aadharCard).size();
     }
 
+    public Hotel updateFacilities(List<Facility> newFacilities,String hotelName){
+
+        //We are having a new facilites that a hotel is planning to bring.
+        //If the hotel is already having that facility ignore that facility otherwise add that facility in the hotelDb
+
+        Hotel hotel = hotelDb.get(hotelName); // getting hotel by name
+        List<Facility> existingFacilities = hotel.getFacilities();
+
+        for (Facility facility: newFacilities ) {
+            if(!existingFacilities.contains(facility)){
+                existingFacilities.add(facility);
+            }
+        }
+        hotel.setFacilities(existingFacilities);
+        hotelDb.put(hotelName, hotel);
+        return hotel;
+        //return the final updated List of facilities and also update that in your hotelDb
+        //Note that newFacilities can also have duplicate facilities possible
+
+    }
 }
