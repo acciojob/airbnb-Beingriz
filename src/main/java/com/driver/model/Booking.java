@@ -1,5 +1,7 @@
 package com.driver.model;
 
+import java.util.UUID;
+
 public class Booking {
 
     private String bookingId; //This will be a random UUID generated String
@@ -27,6 +29,7 @@ public class Booking {
         this.noOfRooms = noOfRooms;
         this.bookingPersonName = bookingPersonName;
         this.hotelName = hotelName;
+        this.bookingId =  String.valueOf(UUID.randomUUID());
     }
 
     public String getBookingId() {
