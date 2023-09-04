@@ -28,10 +28,12 @@ public class HotelManagementService {
     // Hotel Name with Most Facilities.
     public String getHotelWithMostFacilities(){
         List<String> hotelnames = hotelManagementRepository.getHotelWithMostFacilities();
-        String smaller = hotelnames.get(0);
+        if(hotelnames.isEmpty()) return "";
+        String smaller = "";
         if(hotelnames.size() == 1){
-            return smaller;
+            return hotelnames.get(0);
         }else {
+            smaller = hotelnames.get(0);
            for(String name :  hotelnames){
                 if(name.compareTo(smaller) > 0)
                    smaller  = name;
