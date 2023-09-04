@@ -1,5 +1,6 @@
 package com.driver.controllers;
 
+import com.driver.model.Booking;
 import com.driver.model.Facility;
 import com.driver.model.Hotel;
 import com.driver.model.User;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class HotelManagementService {
@@ -27,9 +29,9 @@ public class HotelManagementService {
     public String getHotelWithMostFacilities(){
         List<String> hotelnames = hotelManagementRepository.getHotelWithMostFacilities();
         String smaller = hotelnames.get(0);
-        if(hotelnames.size() == 0){
+        if(hotelnames == null || hotelnames.isEmpty()){
             return "";
-        }else if(hotelnames.size() == 1){
+        }else if(hotelnames.size() <= 1){
             return smaller;
         }else if(hotelnames.size()>1){
 
@@ -39,6 +41,10 @@ public class HotelManagementService {
            }
        }
        return smaller;
+    }
+    // booking a hotel
+    public int bookARoom(Booking booking){
+        return hotelManagementRepository.bookARoom(booking);
     }
 
     //get booking by person

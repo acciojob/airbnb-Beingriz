@@ -29,7 +29,7 @@ public class Booking {
         this.noOfRooms = noOfRooms;
         this.bookingPersonName = bookingPersonName;
         this.hotelName = hotelName;
-        this.bookingId =  String.valueOf(UUID.randomUUID());
+
     }
 
     public String getBookingId() {

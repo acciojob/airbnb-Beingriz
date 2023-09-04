@@ -5,11 +5,9 @@ import com.driver.model.Facility;
 import com.driver.model.Hotel;
 import com.driver.model.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class HotelManagementRepository {
@@ -19,7 +17,8 @@ public class HotelManagementRepository {
     Map<Integer, User> userDb  =  new HashMap<>();
 
     //Bookings done by users having aadhar number as primary key
-    Map<Integer, List<Booking>> userBookingsDb =  new HashMap<>();
+    Map<String, Booking> bookingsDb =  new HashMap<>();
+    Map<Integer, List<Booking>> userbookingsDb =  new HashMap<>();
 
     // Adding new Hotel
     public String addHotel(Hotel hotel){
@@ -49,9 +48,34 @@ public class HotelManagementRepository {
         }
         return hotelnames;
     }
+
+    public int bookARoom(Booking booking){
+
+        //The booking object coming from postman will have all the attributes except bookingId and amountToBePaid;
+        //Have bookingId as a random UUID generated String
+        //save the booking Entity and keep the bookingId as a primary key
+        String bookingId =  String.valueOf(UUID.randomUUID());
+        bookingsDb.put(bookingId, booking); // Saving booking.
+
+        List<Booking> bookings = userbookingsDb.getOrDefault(booking.getBookingAadharCard(), new ArrayList<>());
+        bookings.add(booking);
+        userbookingsDb.put(booking.getBookingAadharCard(),bookings);
+
+        //Calculate the total amount paid by the person based on no. of rooms booked and price of the room per night.
+        int priceperNight = hotelDb.get(booking.getHotelName()).getPricePerNight();
+        int noofBookings  = booking.getNoOfRooms();
+        int totalAmount   =  priceperNight*noofBookings;
+
+        //If there arent enough rooms available in the hotel that we are trying to book return -1
+
+        if(hotelDb.get(booking.getHotelName()).getAvailableRooms() < noofBookings) return -1;
+        //in other case return total amount paid
+
+        return totalAmount;
+    }
     // get bookings by person
     public int getBookings(Integer aadharCard){
-        return userBookingsDb.get(aadharCard).size();
+        return userbookingsDb.get(aadharCard).size();
     }
 
 }
