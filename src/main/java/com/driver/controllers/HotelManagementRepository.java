@@ -27,8 +27,8 @@ public class HotelManagementRepository {
         //incase the hotelName is null or the hotel Object is null return an empty a FAILURE
         //Incase somebody is trying to add the duplicate hotelName return FAILURE
         //in all other cases return SUCCESS after successfully adding the hotel to the hotelDb.
-        if(hotel.getHotelName() ==  null || hotel == null) return "FAILURE";
-        if (hotel.getHotelName().equals(hotelDb.get(hotel.getHotelName()))) return "FAILURE";
+        if(hotel.getHotelName() ==  null) return "FAILURE";
+        if(hotelDb.containsKey(hotel.getHotelName())) return "FAILURE";
         hotelDb.put(hotel.getHotelName(),  hotel);
         return "SUCCESS";
     }
@@ -45,11 +45,15 @@ public class HotelManagementRepository {
         List<String> hotelnames = new ArrayList<>();
         int max = Integer.MIN_VALUE;
         for (Map.Entry<String, Hotel> hotel: hotelDb.entrySet()){
+            // if hotel with no facilities
+            if(hotel.getValue().getFacilities().isEmpty() || hotel.getValue().getFacilities() ==  null ) return hotelnames;
+
             if(hotel.getValue().getFacilities().size() > max || hotel.getValue().getFacilities().size() == max){
                 max = hotel.getValue().getFacilities().size();
                 hotelnames.add(hotel.getKey());
             }
         }
+
         return hotelnames;
     }
 

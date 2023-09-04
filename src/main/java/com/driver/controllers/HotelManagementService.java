@@ -29,9 +29,7 @@ public class HotelManagementService {
     public String getHotelWithMostFacilities(){
         List<String> hotelnames = hotelManagementRepository.getHotelWithMostFacilities();
         String smaller = hotelnames.get(0);
-        if(hotelnames == null || hotelnames.isEmpty()){
-            return "";
-        }else if(hotelnames.size() <= 1){
+        if(hotelnames.size() == 1){
             return smaller;
         }else if(hotelnames.size()>1){
 
